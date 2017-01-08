@@ -1,0 +1,99 @@
+﻿<!--PURPOSE: To create a one-stop, offline test environment for responsive webpage styling-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Screen Preview</title>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--interior styling allows greater portability-->
+    <style>
+        #control-container{
+            font-family:Arial, Helvetica, sans-serif;
+             position:fixed;
+             padding:1em;
+             top:0;
+             left:0;
+             right:0;
+             color:white;
+             background-color:black;
+             opacity:0;
+             transition:opacity .1s ease;
+
+        }
+        #control-container:hover{
+            opacity:1;
+        }
+        #url{
+            width:20em;
+        }
+        .number{
+            width:4em;
+        }
+    </style>
+</head>
+<body>
+	<div id="control-container">
+		<input type="text" class="control" id="url"/>
+        <strong>Width:</strong>
+            <input type="range" min="100" max="2000" step="1" value="1200" class="control slider" id="width-slider" />
+        <input type="number" value="1200" size="4" class="control number" id="width-box" />
+        <strong>Height:</strong>
+        <input type="range" min="100" max="2000" step="1" value="900" class="control slider" id="height-slider" />
+        <input type="number" value="900" size="4" class="control number" id="height-box" />
+
+	</div>
+	<div id="display-container">
+		<iframe src="https://kyle-stockton.github.io" style="border:none;width:1600px;height:900px;" id="iframe"></iframe>
+	</div>
+</body>
+</html>
+<!--JavaScript functions make display changes according to input specifications-->
+<script>
+    var url = document.getElementById('url'),
+        widthSlider = document.getElementById('width-slider'),
+        widthBox = document.getElementById('width-box'),
+        heightSlider = document.getElementById('height-slider'),
+        heightBox = document.getElementById('height-box'),
+		iframe = document.getElementById('iframe');
+
+    url.value = iframe.src;
+    url.onchange = function () {
+        iframe.src = url.value;
+    }
+
+    function redefineDimensions() {
+        var style = "border:none;width:" + widthBox.value.toString() + "px;height:" 
+            + heightBox.value.toString() + "px;";
+        iframe.style = style;
+    }
+
+    function sliderChange() {
+        widthBox.value = widthSlider.value;
+        heightBox.value = heightSlider.value;
+        redefineDimensions();
+    };
+    heightSlider.onchange = function () { sliderChange(); }
+    widthSlider.onchange = function () { sliderChange(); }
+
+    function boxChange() {
+   	    widthSlider.value = widthBox.value;
+   	    heightSlider.value = heightBox.value;
+   	    redefineDimensions()
+   	};
+   	heightBox.onchange = function () { boxChange(); }
+   	widthBox.onchange = function () { boxChange(); }
+
+</script>
+
+<!--
+
+TODO:
+presets
+hotkeys
+refresh
+style
+comment
+cleanup
+test
+-->
+
